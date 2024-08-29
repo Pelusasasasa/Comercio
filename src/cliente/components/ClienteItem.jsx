@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { setActiveCliente } from "../../store/cliente/clienteSlice";
 
-export const ClienteItem = ({ _id, nombre, direccion, telefono, cuit, cond_iva, saldo }) => {
+export const ClienteItem = ({ _id, nombre, direccion, telefono, cuit, condicionIva, saldo }) => {
   
   const { clientes, active } = useSelector( state => state.cliente)
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export const ClienteItem = ({ _id, nombre, direccion, telefono, cuit, cond_iva, 
       <td className="border border-black">{direccion}</td>
       <td className="border border-black">{telefono}</td>
       <td className="border border-black">{cuit}</td>
-      <td className="border border-black">{cond_iva}</td>
+      <td className="border border-black">{condicionIva.toUpperCase()}</td>
       <td className="border border-black text-end">{saldo.toFixed(2)}</td>
     </tr>
   )

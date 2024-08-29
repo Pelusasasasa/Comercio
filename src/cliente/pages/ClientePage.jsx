@@ -2,7 +2,8 @@ import { Link } from "react-router-dom"
 import { ClienteLayout } from "../layout/ClienteLayout"
 import { useDispatch, useSelector } from "react-redux"
 import { ClienteItem } from "../components/ClienteItem";
-import { startLoadingClientes } from "../../store/cliente/thunks";
+import { startCreateCliente, startLoadingClientes } from "../../store/cliente/thunks";
+import { Button } from "../components/Button";
 
 export const ClientePage = () => {
 
@@ -14,7 +15,12 @@ export const ClientePage = () => {
 
     dispatch( startLoadingClientes(e.target.value === '' ? 'NADA' : e.target.value) )
     
+  };
+
+  const handleCreateCliente = async() => {
+    await dispatch( startCreateCliente());
   }
+
 
   return (
     <ClienteLayout>
@@ -45,14 +51,9 @@ export const ClientePage = () => {
         </section>
 
         <section className="flex justify-around mt-2">
-          <button className="border border-black bg-gray-200 p-2 font-bold rounded-xl">
-            <Link to='/cliente/agregar'>Agregar Cliente</Link>
-          </button>
-          <button className="border border-black bg-gray-200 p-2 font-bold rounded-xl">
-            <Link to='/' >
-              Salir
-            </Link>
-          </button>
+          <Button to='/cliente/agregar' text='Agregar Cliente' funcion={handleCreateCliente} />
+          <Button to='/cliente/modificar' text='Modificar Cliente' />
+          <Button to='/' text='Salir'/>
         </section>
     </ClienteLayout>
   )

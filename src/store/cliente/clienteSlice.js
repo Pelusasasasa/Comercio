@@ -12,7 +12,7 @@ export const clienteSlice = createSlice({
         savingNewCliente: (state) => {
             state.isSaving = true;
         },
-        addNewEmptyCliente: (state, action) => {
+        addNewCliente: (state, action) => {
             state.clientes.push( action.payload )
             state.isSaving = false;
         },
@@ -29,4 +29,4 @@ export const clienteSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { savingNewCliente, addNewEmptyCliente, setActiveCliente, setClientes } = clienteSlice.actions;
+export const { savingNewCliente, addNewCliente, setActiveCliente, setClientes } = clienteSlice.actions;
