@@ -1,6 +1,6 @@
 export const ClienteLayout = ({ children }) => {
   return (
-    <section className="bg-amber-600 h-full">
+    <section className="bg-orange-300 h-full">
 
         { children }
 
