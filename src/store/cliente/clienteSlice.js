@@ -32,6 +32,10 @@ export const clienteSlice = createSlice({
                 }
                 return cliente;
             });
+        },
+        borrarCliente: (state, action) => {
+            state.active = null;
+            state.clientes = state.clientes.filter( cliente => cliente._id !== action.payload._id);
         }
 
     }
@@ -39,4 +43,4 @@ export const clienteSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { savingNewCliente, addNewCliente, setActiveCliente, setClientes, updateCliente } = clienteSlice.actions;
+export const { savingNewCliente, addNewCliente, setActiveCliente, setClientes, updateCliente, borrarCliente } = clienteSlice.actions;

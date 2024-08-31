@@ -1,13 +1,17 @@
 
 import { ClienteLayout } from "../layout/ClienteLayout"
 import { useDispatch, useSelector } from "react-redux"
+
+import Swal from "sweetalert2";
+
 import { ClienteItem } from "../components/ClienteItem";
-import { startCreateCliente, startLoadingClientes } from "../../store/cliente/thunks";
+import { startCreateCliente, startDeleteCliente, startLoadingClientes } from "../../store/cliente/thunks";
 import { Button } from "../components/Button";
+
 
 export const ClientePage = () => {
 
-  const { clientes } = useSelector( state => state.cliente);
+  const { clientes, active: cliente } = useSelector( state => state.cliente);
   const dispatch = useDispatch();
 
 
@@ -19,8 +23,19 @@ export const ClientePage = () => {
 
   const handleCreateCliente = async() => {
     await dispatch( startCreateCliente());
-  }
+  };
 
+  const handleDeleteCliente = async() => {
+    const {isConfirmed} = await Swal.fire({
+      title: `Eliminar cliente ${cliente.nombre}?`,
+      confirmButtonText:'Aceptar',
+      showCancelButton: true
+    });
+
+    if (isConfirmed) {
+      await dispatch( startDeleteCliente() );
+    }
+  };
 
   return (
     <ClienteLayout>
@@ -53,6 +68,7 @@ export const ClientePage = () => {
         <section className="flex justify-around mt-2">
           <Button to='/cliente/agregar' text='Agregar Cliente' funcion={handleCreateCliente} />
           <Button to='/cliente/modificar' text='Modificar Cliente' />
+          <Button text='Eliminar Cliente' funcion={handleDeleteCliente} />
           <Button to='/' text='Salir'/>
         </section>
     </ClienteLayout>

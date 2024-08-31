@@ -1,7 +1,6 @@
-import { setActiveCliente, setClientes, addNewCliente, updateCliente } from "./clienteSlice";
-import { loadClientes } from '../../cliente/helpers';
-import { getIdLastCliente, postCliente } from "../../cliente/helpers";
-import { putCliente } from "../../cliente/helpers/putCliente";
+import { setActiveCliente, setClientes, addNewCliente, updateCliente, borrarCliente } from "./clienteSlice";
+import { deleteCliente, loadClientes } from '../../cliente/helpers';
+import { getIdLastCliente, postCliente, putCliente } from "../../cliente/helpers";
 
 //http://localhost:4000/gestion/clientes
 
@@ -42,7 +41,7 @@ export const startPutCliente = () => {
         dispatch( updateCliente( active ) );
         
     };
-}
+};
 
 export const startLoadingClientes = (text) => {
     return async(dispatch, getState) => {
@@ -50,4 +49,12 @@ export const startLoadingClientes = (text) => {
 
         dispatch( setClientes(clientes) )
     }
-}
+};
+
+export const startDeleteCliente = () => {
+    return async(dispatch, getState) => {
+        const { active } = getState().cliente;
+        await deleteCliente( active._id );
+        dispatch( borrarCliente( active ) )
+    };
+};
