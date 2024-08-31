@@ -10,4 +10,4 @@ export const ClienteRouter = () => {
         <Route path='/modificar' element={ <ModificarCliente/> } />
     </Routes>
   )
-}
+};
