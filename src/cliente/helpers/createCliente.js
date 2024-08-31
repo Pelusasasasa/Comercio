@@ -9,7 +9,6 @@ export const getIdLastCliente = async() =>{
 
 };
 
-
 export const postCliente = async(cliente) => {
     const {cliente: res} = (await axios.post(`${URL}clientes`, cliente)).data;
     return res;

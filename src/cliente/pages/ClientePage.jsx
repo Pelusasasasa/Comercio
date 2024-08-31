@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+
 import { ClienteLayout } from "../layout/ClienteLayout"
 import { useDispatch, useSelector } from "react-redux"
 import { ClienteItem } from "../components/ClienteItem";
@@ -29,7 +29,7 @@ export const ClientePage = () => {
           <input onChange={handleClientes} type="text" name="buscador" id="buscador" className="w-96 border border-black mx-5 my-2 p-2" placeholder="Nombre Cliente" />
         </header>
 
-        <section className="bg-white h-96 border border-black overflow-scroll">
+        <section className="bg-white h-120 border border-black overflow-scroll">
           <table className="w-full border-collapse">
             <thead>
               <tr>

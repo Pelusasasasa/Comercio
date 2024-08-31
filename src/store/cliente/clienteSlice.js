@@ -23,10 +23,20 @@ export const clienteSlice = createSlice({
         setClientes: (state, action) => {
             state.clientes = action.payload;
         },
+        updateCliente: (state, action) =>{
+            state.isSaving = false;
+
+            state.clientes = state.clientes.map( cliente => {
+                if( cliente._id === action.payload._id ){
+                    return action.payload;
+                }
+                return cliente;
+            });
+        }
 
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { savingNewCliente, addNewCliente, setActiveCliente, setClientes } = clienteSlice.actions;
+export const { savingNewCliente, addNewCliente, setActiveCliente, setClientes, updateCliente } = clienteSlice.actions;
