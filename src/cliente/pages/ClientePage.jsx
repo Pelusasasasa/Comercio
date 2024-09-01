@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 
 import { ClienteLayout } from "../layout/ClienteLayout"
 import { useDispatch, useSelector } from "react-redux"
@@ -7,11 +8,26 @@ import Swal from "sweetalert2";
 import { ClienteItem } from "../components/ClienteItem";
 import { startCreateCliente, startDeleteCliente, startLoadingClientes } from "../../store/cliente/thunks";
 import { Button } from "../components/Button";
+import { useEffect } from 'react';
 
 
 export const ClientePage = () => {
 
   const { clientes, active: cliente } = useSelector( state => state.cliente);
+  const { status } = useSelector( state => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (status !== 'authenticated') {
+      navigate('/');
+    }
+  }, [status])
+  
+
+  if ( status !== 'authenticated' ){
+    navigate('/');
+  };
+
   const dispatch = useDispatch();
 
 
