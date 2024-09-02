@@ -11,5 +11,6 @@ export const startLogin = ( id ) => {
             dispatch( logout() )
         }
         
+        return res;
     }
 }

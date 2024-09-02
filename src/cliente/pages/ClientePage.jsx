@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 
 import { ClienteLayout } from "../layout/ClienteLayout"
 import { useDispatch, useSelector } from "react-redux"
@@ -8,25 +7,12 @@ import Swal from "sweetalert2";
 import { ClienteItem } from "../components/ClienteItem";
 import { startCreateCliente, startDeleteCliente, startLoadingClientes } from "../../store/cliente/thunks";
 import { Button } from "../components/Button";
-import { useEffect } from 'react';
 
 
 export const ClientePage = () => {
 
   const { clientes, active: cliente } = useSelector( state => state.cliente);
-  const { status } = useSelector( state => state.auth);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (status !== 'authenticated') {
-      navigate('/');
-    }
-  }, [status])
-  
-
-  if ( status !== 'authenticated' ){
-    navigate('/');
-  };
+  const { permiso } = useSelector( state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -83,8 +69,8 @@ export const ClientePage = () => {
 
         <section className="flex justify-around mt-2">
           <Button to='/cliente/agregar' text='Agregar Cliente' funcion={handleCreateCliente} />
-          <Button to='/cliente/modificar' text='Modificar Cliente' />
-          <Button text='Eliminar Cliente' funcion={handleDeleteCliente} />
+          <Button to='/cliente/modificar' text='Modificar Cliente' disabled={permiso !== 2 ? ' ' : 'hidden'} />
+          <Button text='Eliminar Cliente' funcion={handleDeleteCliente} disabled={permiso === 0 ? ' ' : 'hidden'} />
           <Button to='/' text='Salir'/>
         </section>
     </ClienteLayout>

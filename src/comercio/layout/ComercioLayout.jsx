@@ -31,10 +31,14 @@ export const ComercioLayout = ({ children }) => {
 
     if( isConfirmed ){
 
-      await dispatch( startLogin( value ) );
+      const { nombre } = await dispatch( startLogin( value ) );
 
-      navigate('/cliente/lista')
-      
+      if (nombre) {
+        navigate('/cliente/lista');
+      }else{
+        await Swal.fire('Error', 'Contraseña incorrecta', 'error');
+      }
+
     };
   };
 
