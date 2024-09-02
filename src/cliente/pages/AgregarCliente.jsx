@@ -5,6 +5,7 @@ import { ClienteLayout } from "../layout/ClienteLayout";
 import { useForm } from "../hooks/useForm";
 import { setActiveCliente, startSaveCliente } from "../../store/cliente";
 import { Button } from "../components/Button";
+import { startPostMovVendedores } from "../../store/auth/thunks";
 
 const formData = {
   nombre: '',
@@ -20,6 +21,7 @@ const formData = {
 export const AgregarCliente = () => {
 
   const {active: cliente} = useSelector(state => state.cliente);
+  const {nombre: user} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const {onInputChange, nombre, condicionFacturacion, localidad, direccion, telefono, cuit, condicionIva, observaciones, formState} = useForm(cliente);
 
@@ -29,6 +31,7 @@ export const AgregarCliente = () => {
 
   const savecliente = async() => {
     await dispatch(startSaveCliente())
+    await dispatch(startPostMovVendedores(`${user} Agrego al cliente ${cliente.nombre}`, 'Clientes'));
   }
   
 

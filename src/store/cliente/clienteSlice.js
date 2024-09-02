@@ -20,6 +20,10 @@ export const clienteSlice = createSlice({
             state.active = action.payload;
             state.messageSaved = '';
         },
+        setEmptyClientes: (state, action) => {
+            state.clientes = [];
+            state.active = null;
+        },
         setClientes: (state, action) => {
             state.clientes = action.payload;
         },
@@ -43,4 +47,4 @@ export const clienteSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { savingNewCliente, addNewCliente, setActiveCliente, setClientes, updateCliente, borrarCliente } = clienteSlice.actions;
+export const { savingNewCliente, addNewCliente, setActiveCliente, setEmptyClientes, setClientes, updateCliente, borrarCliente,  } = clienteSlice.actions;

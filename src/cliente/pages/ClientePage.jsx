@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import { ClienteItem } from "../components/ClienteItem";
 import { startCreateCliente, startDeleteCliente, startLoadingClientes } from "../../store/cliente/thunks";
 import { Button } from "../components/Button";
+import { startPostMovVendedores } from "../../store/auth/thunks";
+import { setEmptyClientes } from "../../store/cliente/clienteSlice";
 
 
 export const ClientePage = () => {
 
   const { clientes, active: cliente } = useSelector( state => state.cliente);
-  const { permiso } = useSelector( state => state.auth);
+  const { nombre, permiso } = useSelector( state => state.auth);
 
   const dispatch = useDispatch();
 
@@ -36,8 +38,13 @@ export const ClientePage = () => {
 
     if (isConfirmed) {
       await dispatch( startDeleteCliente() );
+      await dispatch(startPostMovVendedores(`${nombre} Elimino al cliente ${cliente.nombre}`, 'Clientes'));
     }
   };
+
+  const salir = async() => {
+    dispatch( setEmptyClientes() );
+  }
 
   return (
     <ClienteLayout>
@@ -71,7 +78,7 @@ export const ClientePage = () => {
           <Button to='/cliente/agregar' text='Agregar Cliente' funcion={handleCreateCliente} />
           <Button to='/cliente/modificar' text='Modificar Cliente' disabled={permiso !== 2 ? ' ' : 'hidden'} />
           <Button text='Eliminar Cliente' funcion={handleDeleteCliente} disabled={permiso === 0 ? ' ' : 'hidden'} />
-          <Button to='/' text='Salir'/>
+          <Button to='/' text='Salir' funcion={salir}/>
         </section>
     </ClienteLayout>
   )

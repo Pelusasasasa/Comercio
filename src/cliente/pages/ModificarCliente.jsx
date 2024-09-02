@@ -6,9 +6,11 @@ import { Button } from '../components/Button';
 import { startPutCliente } from '../../store/cliente/thunks';
 import { useEffect } from 'react';
 import { setActiveCliente } from '../../store/cliente/clienteSlice';
+import { startPostMovVendedores } from '../../store/auth/thunks';
 
 export const ModificarCliente = () => {
   const { active: cliente } = useSelector(state => state.cliente);
+  const { nombre: user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const {onInputChange, nombre, condicionFacturacion, localidad, telefono, direccion, cuit, condicionIva, observaciones, formState} = useForm(cliente); 
 
@@ -19,6 +21,7 @@ export const ModificarCliente = () => {
 
   const putCliente = async() => {
     await dispatch( startPutCliente() );
+    await dispatch(startPostMovVendedores(`${user} Modifico al cliente ${cliente.nombre}`, 'Clientes'));
   }
 
   return (
