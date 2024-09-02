@@ -1,12 +1,15 @@
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { useForm } from '../hooks/useForm';
+import { useEffect } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+
+import { startPutCliente } from '../../store/cliente/thunks';
+import { startPostMovVendedores } from '../../store/auth/thunks';
+import { setActiveCliente } from '../../store/cliente/clienteSlice';
+
 import { ClienteLayout } from '../layout/ClienteLayout'
 import { Button } from '../components/Button';
-import { startPutCliente } from '../../store/cliente/thunks';
-import { useEffect } from 'react';
-import { setActiveCliente } from '../../store/cliente/clienteSlice';
-import { startPostMovVendedores } from '../../store/auth/thunks';
+import { useForm } from '../../hooks/useForm';
+
 
 export const ModificarCliente = () => {
   const { active: cliente } = useSelector(state => state.cliente);
