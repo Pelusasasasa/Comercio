@@ -9,3 +9,7 @@ html, body, #root{
 .h-120{
     height: 30rem;
 }
+
+td{
+    border: .1rem solid black;
+}

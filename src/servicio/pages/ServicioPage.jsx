@@ -76,7 +76,7 @@ export const ServicioPage = () => {
 
 
       <section className='flex justify-around mt-5'>
-        <Button text='Agregar' to='' />
+        <Button text='Agregar' to='/servicio/agregar' />
         <Button text='Modificar' to='' disabled={permiso !== 2 ? '' : 'hidden'} />
         <Button text='Eliminar' to='' disabled={permiso === 0 ? '' : 'hidden'} funcion={handleDelete}/>
         <Button text='Salir' to='/' />
