@@ -10,10 +10,17 @@ export const servicioSlice = createSlice({
     reducers: {
         setService: (state, action) => {
             state.service = action.payload;
+        },
+        setServicios: (state, action) => {
+            state.servicios = action.payload;
+        },
+        deleteServicios: (state, action) => {
+            state.servicios = state.servicios.filter(servicio => servicio._id !== action.payload._id);
+            state.service = null;
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { setService } = servicioSlice.actions;
+export const { setService, setServicios, deleteServicios } = servicioSlice.actions;

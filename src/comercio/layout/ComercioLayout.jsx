@@ -48,15 +48,15 @@ export const ComercioLayout = ({ children }) => {
   };
 
   return (
-    <section className="border container border-black w-40 hover:cursor-pointer">
+    <section className="container  hover:cursor-pointer flex justify-around w-full bg-orange-300 h-full">
 
-        <div className="flex flex-col" onClick={verificarUsuario} id="cliente">
-            <img src="/clientes.jpg" alt="" />
+        <div className="flex flex-col border border-black h-min p-2"  onClick={verificarUsuario} id="cliente">
+            <img src="/clientes.jpg" alt="" className="w-52" />
             <h3 className="text-center font-bold text-2xl">Clientes</h3>
         </div>    
 
-        <div className="flex flex-col" onClick={verificarUsuario} id="servicio">
-            <img src="/clientes.jpg" alt="" />
+        <div className="flex flex-col border-black border h-min p-2" onClick={verificarUsuario} id="servicio">
+            <img src="/Servicio.jpeg" alt="" className="w-52"/>
             <h3 className="text-center font-bold text-2xl">Servicio</h3>
         </div>    
 

@@ -14,9 +14,8 @@ const isDev = true;
 let mainWindow;
 
 function createWindow() {
-    mainWindow = new BrowserWindow({
-        fullscreen: true
-    });
+    mainWindow = new BrowserWindow();
+    mainWindow.maximize();
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file//${path.join(__dirname, '../build/index.html')}`);
     
     if (isDev) {
