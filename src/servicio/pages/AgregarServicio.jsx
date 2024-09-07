@@ -1,32 +1,47 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 
 import { PostPutService } from '../layout/Post-PutService'
 import { Button } from '../components/Button'
-
-
-
-const initialForm = {
-    cliente: '',
-    codigo: '',
-    direccion: '',
-    telefono: '',
-    codProd: '',
-    producto: '',
-    marca: '',
-    modelo: ''
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { setService } from '../../store/servicio/servicioSlice';
+import { ServiceAddItem } from '../components/ServiceAddItem';
 
 export const AgregarServicio = () => {
+    const [arrayServicios, setArrayServicio] = useState([]);
+    const {service} = useSelector( state => state.servicio);
+    
+    const dispatch = useDispatch();
 
-      const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, formState, onInputChange} = useForm(initialForm);
+    const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState, onInputChange} = useForm(service);
 
     useEffect(() => {
-      
-    }, [])
+      dispatch( setService( formState ));
+    }, [formState])
     
+    const addServico = () => {
+        const elem = {};
+        elem.numero = numero;
+        elem.idCliente = codigo;
+        elem.cliente = cliente;
+        elem.direccion = direccion;
+        elem.telefono = telefono;
+
+        elem.codProd = codProd;
+        elem.producto = producto;
+        elem.marca = marca;
+        elem.modelo = modelo;
+        elem.problemas = inconvenientes;
+
+        elem.vendedor = vendedor;
+        elem.numero = numero;
+        elem.estado = estado;
+
+        setArrayServicio([...arrayServicios, elem]);
+    }
+
     const handleSubmit = () => {
-        console.log(formState)
+        console.log(arrayServicios)
     }
 
   return (
@@ -62,53 +77,60 @@ export const AgregarServicio = () => {
                       <main className='flex justify-around '>
                           <div className='flex flex-col'>
                               <label htmlFor="codProd">Cod. Prod</label>
-                              <input type="text" name="codProd" id="codProd" className='border border-black w-80'/>
+                              <input type="text" name="codProd" id="codProd" onChange={onInputChange} className='border border-black w-80'/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="producto">Producto</label>
-                              <input type="text" name="producto" id="producto" className='border border-black w-80'/>
+                              <input type="text" name="producto" id="producto" onChange={onInputChange} className='border border-black w-80'/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="modelo">Modelo</label>
-                              <input type="text" name="modelo" id="modelo" className='border border-black w-80'/>
+                              <input type="text" name="modelo" id="modelo" onChange={onInputChange} className='border border-black w-80'/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="marca">Marca</label>
-                              <input type="text" name="marca" id="marca" className='border border-black w-80'/>
+                              <input type="text" name="marca" id="marca" onChange={onInputChange} className='border border-black w-80'/>
                           </div>
                       </main>
                       <div className='flex flex-col'>
                           <label htmlFor="">Inconvenientes</label>
-                          <textarea className='border border-black' cols={2} rows={7} name="" id=""></textarea>
+                          <textarea className='border border-black' cols={2} rows={7} name="inconvenientes" id="inconvenientes" onChange={onInputChange}></textarea>
+                      </div>
+                      <div className='flex justify-center' onClick={addServico}>
+                        <p className='text-4xl hover:cursor-pointer border rounded-full m-0 border-black p-0'> + </p>
                       </div>
                   </fieldset>
               </section>
 
               <section>
-                  <fieldset>
+                  <fieldset className='p-2 border-gray-500'>
                       <legend>Detalles</legend>
                       <main className='bg-white h-52 overflow-scroll'>
                           <table className='w-full border-collapse'>
-                          <thead>
-                              <tr>
-                                  <th className='border border-black'>Cod Prod</th>
-                                  <th className='border border-black'>Producto</th>
-                                  <th className='border border-black'>Marca</th>
-                                  <th className='border border-black'>Modelo</th>
-                                  <th className='border border-black'>Acciones</th>
-                              </tr>
-                              <tbody></tbody>
-                          </thead>
+                            <thead>
+                                <tr>
+                                    <th className='border border-black'>Cod Prod</th>
+                                    <th className='border border-black'>Producto</th>
+                                    <th className='border border-black'>Marca</th>
+                                    <th className='border border-black'>Modelo</th>
+                                    <th className='border border-black'>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {arrayServicios.map( elem => (
+                                    <ServiceAddItem key={elem.codProd} {...elem} />
+                                ))}
+                            </tbody>
                       </table>
                       </main>
                       <main className='flex justify-around gap-2 mt-2'>
                         <div className='flex flex-col'>
                           <label htmlFor="numero">Numero</label>
-                          <input className='border border-black' type="number" name="numero" id="numero" disabled />
+                          <input className='border border-black' type="number" name="numero" id="numero" disabled value={numero}/>
                         </div>
                         <div className='flex flex-col'>
                           <label htmlFor="vendedor">Vendedor</label>
-                          <input className='border border-black' type="text" name="vendedor" id="vendedor" disabled />
+                          <input className='border border-black' type="text" name="vendedor" id="vendedor" disabled value={vendedor} />
                         </div>
                         <div className='flex flex-col'>
                           <label htmlFor="estado">Estado</label>

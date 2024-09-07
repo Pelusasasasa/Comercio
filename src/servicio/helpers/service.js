@@ -1,6 +1,11 @@
 import axios from "axios";
 const URL = 'http://localhost:4000/gestion/';
 
+export const getNumeroService = async() => {
+    const numero = (await axios.get(`${URL}numero/Servicio`)).data + 1;
+    return numero;
+}
+
 export const getService = async( id ) => {
     const service = (await axios.get(`${URL}servicios/id/${id}`)).data;
     return service;

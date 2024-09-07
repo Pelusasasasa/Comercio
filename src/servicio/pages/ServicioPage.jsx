@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Button } from '../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
-import { startDeleteServices, startLoadingServices } from '../../store/servicio';
+import { startCreateService, startDeleteServices, startLoadingServices } from '../../store/servicio';
 import { ServiceItem } from '../components/ServiceItem';
 import Swal from 'sweetalert2';
 import { startPostMovVendedores } from '../../store/auth/thunks';
@@ -26,6 +26,10 @@ export const ServicioPage = () => {
     dispatch( startLoadingServices(text === '' ? 'NADA' : text) );
   };
 
+  const handleAddService = () => {
+    dispatch( startCreateService() );
+  };
+
   const handleDelete = async() => {
     
     const { isConfirmed } = await Swal.fire({
@@ -38,7 +42,7 @@ export const ServicioPage = () => {
       await dispatch( startDeleteServices(service._id) );
       await dispatch(startPostMovVendedores(`${nombre} Elimino el servicio ${service.producto} del cliente ${service.cliente}`, 'Servicio'));
     }
-  }
+  };
 
   return (
     <section className='bg-orange-300 h-full'>
@@ -76,7 +80,7 @@ export const ServicioPage = () => {
 
 
       <section className='flex justify-around mt-5'>
-        <Button text='Agregar' to='/servicio/agregar' />
+        <Button text='Agregar' to='/servicio/agregar' funcion={handleAddService} />
         <Button text='Modificar' to='' disabled={permiso !== 2 ? '' : 'hidden'} />
         <Button text='Eliminar' to='' disabled={permiso === 0 ? '' : 'hidden'} funcion={handleDelete}/>
         <Button text='Salir' to='/' />

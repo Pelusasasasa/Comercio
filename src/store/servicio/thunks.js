@@ -1,5 +1,16 @@
-import { deleteService, getService, getServices } from "../../servicio/helpers/service"
-import { deleteServicios, setService, setServicios } from "./servicioSlice";
+import { deleteService, getNumeroService, getService, getServices } from "../../servicio/helpers/service"
+import { createService, deleteServicios, setService, setServicios } from "./servicioSlice";
+
+
+export const startCreateService = () => {
+    return async(dispatch, getState) => {
+
+        const { nombre } = getState().auth;
+        const numero = await getNumeroService();
+        dispatch( createService({numero, vendedor: nombre}) );
+
+    };
+}
 
 export const startLoadingService = (id) => {
     return async( dispatch ) => {
@@ -18,6 +29,7 @@ export const startLoadingServices = (text) => {
     };
 };
 
+
 export const startDeleteServices = () => {
     return async( dispatch, getState ) => {
         const {service} = getState().servicio;
@@ -25,4 +37,4 @@ export const startDeleteServices = () => {
 
         dispatch( deleteServicios( res ) );
     }
-}
+};

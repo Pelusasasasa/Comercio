@@ -8,6 +8,9 @@ export const servicioSlice = createSlice({
         isSaving: null
     },
     reducers: {
+        createService: (state, action) => {
+            state.service = action.payload;
+        },
         setService: (state, action) => {
             state.service = action.payload;
         },
@@ -23,4 +26,4 @@ export const servicioSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { setService, setServicios, deleteServicios } = servicioSlice.actions;
+export const { createService, setService, setServicios, deleteServicios } = servicioSlice.actions;
