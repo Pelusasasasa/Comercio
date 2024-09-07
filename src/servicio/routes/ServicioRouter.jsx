@@ -1,7 +1,6 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 
-import { ServicioPage } from '../pages';
-import { AgregarServicio } from '../pages';
+import { ServicioPage, AgregarServicio, ModificarServicio } from '../pages';
 
 
 export const ServicioRouter = () => {
@@ -9,6 +8,7 @@ export const ServicioRouter = () => {
     <Routes>
         <Route path='/lista' element={<ServicioPage />} />
         <Route path='/agregar' element={<AgregarServicio /> } />
+        <Route path='/modificar' element={<ModificarServicio /> } />
     </Routes>
   )
 }

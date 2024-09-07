@@ -21,6 +21,13 @@ export const getServices = async(text) => {
     return servicios;
 };
 
+export const putService = async( service ) => {
+
+    const res = (await axios.put(`${URL}servicios/id/${service._id}`, service)).data;
+    return res;
+
+};
+
 export const deleteService = async( id ) => {
 
     const res = (await axios.delete(`${URL}servicios/id/${id}`)).data;

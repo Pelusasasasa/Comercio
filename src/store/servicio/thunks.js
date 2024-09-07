@@ -1,6 +1,5 @@
-import { deleteService, getNumeroService, getService, getServices } from "../../servicio/helpers/service"
-import { createService, deleteServicios, setService, setServicios } from "./servicioSlice";
-
+import { deleteService, getNumeroService, getService, getServices, putService } from "../../servicio/helpers/service"
+import { createService, deleteServicios, setSaving, setService, setServicios, updateService } from "./servicioSlice";
 
 export const startCreateService = () => {
     return async(dispatch, getState) => {
@@ -10,7 +9,7 @@ export const startCreateService = () => {
         dispatch( createService({numero, vendedor: nombre}) );
 
     };
-}
+};
 
 export const startLoadingService = (id) => {
     return async( dispatch ) => {
@@ -29,6 +28,17 @@ export const startLoadingServices = (text) => {
     };
 };
 
+export const startPutServices = () => {
+    return async(dispatch, getState) => {
+        await dispatch( setSaving() );
+
+        const {service} = getState().servicio;
+    
+        await putService( service );
+
+        dispatch( updateService(service) )
+    }
+}
 
 export const startDeleteServices = () => {
     return async( dispatch, getState ) => {
@@ -38,3 +48,4 @@ export const startDeleteServices = () => {
         dispatch( deleteServicios( res ) );
     }
 };
+

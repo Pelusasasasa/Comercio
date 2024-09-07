@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Button } from '../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
-import { startCreateService, startDeleteServices, startLoadingServices } from '../../store/servicio';
+import { startCreateService, startDeleteServices, startLoadingServices, startPutServices } from '../../store/servicio';
 import { ServiceItem } from '../components/ServiceItem';
 import Swal from 'sweetalert2';
 import { startPostMovVendedores } from '../../store/auth/thunks';
@@ -81,7 +81,7 @@ export const ServicioPage = () => {
 
       <section className='flex justify-around mt-5'>
         <Button text='Agregar' to='/servicio/agregar' funcion={handleAddService} />
-        <Button text='Modificar' to='' disabled={permiso !== 2 ? '' : 'hidden'} />
+        <Button text='Modificar' to='/servicio/modificar' disabled={permiso !== 2 ? '' : 'hidden'} />
         <Button text='Eliminar' to='' disabled={permiso === 0 ? '' : 'hidden'} funcion={handleDelete}/>
         <Button text='Salir' to='/' />
       </section>

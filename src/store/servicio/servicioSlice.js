@@ -5,9 +5,12 @@ export const servicioSlice = createSlice({
     initialState: {
         servicios: [],
         service: null,
-        isSaving: null
+        isSaving: false
     },
     reducers: {
+        setSaving: (state) => {
+            state.isSaving = true;
+        },
         createService: (state, action) => {
             state.service = action.payload;
         },
@@ -16,6 +19,10 @@ export const servicioSlice = createSlice({
         },
         setServicios: (state, action) => {
             state.servicios = action.payload;
+        },
+        updateService: (state, action) => {
+            state.service = action.payload;
+            state.isSaving = false;
         },
         deleteServicios: (state, action) => {
             state.servicios = state.servicios.filter(servicio => servicio._id !== action.payload._id);
@@ -26,4 +33,4 @@ export const servicioSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { createService, setService, setServicios, deleteServicios } = servicioSlice.actions;
+export const { setSaving, createService, setService, setServicios, updateService, deleteServicios } = servicioSlice.actions;
