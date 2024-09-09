@@ -20,6 +20,10 @@ export const ModificarServicio = () => {
 
     const handleputService = async() => {
         await dispatch( startPutServices() );
+    };
+
+    const salir = async() => {
+        await dispatch( setService({}) );
     }
 
   return (
@@ -111,7 +115,7 @@ export const ModificarServicio = () => {
 
         <section className=' mt-2 pb-2 flex justify-around'>
             <Button text='Modificar' to='/servicio/lista' type='submit' funcion={handleputService} disabled={isSaving ? 'invisible' : ''}/>
-            <Button text='salir' to='/servicio/lista' />
+            <Button text='salir' to='/servicio/lista' funcion={salir} />
         </section>
     </PostPutService>
   )

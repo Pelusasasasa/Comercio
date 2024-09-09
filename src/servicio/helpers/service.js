@@ -21,6 +21,13 @@ export const getServices = async(text) => {
     return servicios;
 };
 
+export const postService = async( service ) => {
+
+    const res = (await axios.post(`${URL}servicios`, service)).data;
+    return res;
+
+};
+
 export const putService = async( service ) => {
 
     const res = (await axios.put(`${URL}servicios/id/${service._id}`, service)).data;

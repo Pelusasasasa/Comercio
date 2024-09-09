@@ -6,6 +6,7 @@ import { Button } from '../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
 import { setService } from '../../store/servicio/servicioSlice';
 import { ServiceAddItem } from '../components/ServiceAddItem';
+import { startAddService } from '../../store/servicio/thunks';
 
 export const AgregarServicio = () => {
     const [arrayServicios, setArrayServicio] = useState([]);
@@ -14,14 +15,13 @@ export const AgregarServicio = () => {
     const dispatch = useDispatch();
 
     const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState, onInputChange} = useForm(service);
-
     useEffect(() => {
       dispatch( setService( formState ));
     }, [formState])
     
     const addServico = () => {
         const elem = {};
-        elem.numero = numero;
+
         elem.idCliente = codigo;
         elem.cliente = cliente;
         elem.direccion = direccion;
@@ -32,16 +32,15 @@ export const AgregarServicio = () => {
         elem.marca = marca;
         elem.modelo = modelo;
         elem.problemas = inconvenientes;
-
+        elem.numero = arrayServicios.length !== 0 ? arrayServicios[arrayServicios.length - 1].numero + 1 : numero;
         elem.vendedor = vendedor;
-        elem.numero = numero;
         elem.estado = estado;
 
         setArrayServicio([...arrayServicios, elem]);
     }
 
     const handleSubmit = () => {
-        console.log(arrayServicios)
+        dispatch( startAddService( arrayServicios ) )
     }
 
   return (
@@ -118,7 +117,7 @@ export const AgregarServicio = () => {
                             </thead>
                             <tbody>
                                 {arrayServicios.map( elem => (
-                                    <ServiceAddItem key={elem.codProd} {...elem} />
+                                    <ServiceAddItem key={elem.numero} {...elem} />
                                 ))}
                             </tbody>
                       </table>
@@ -134,7 +133,7 @@ export const AgregarServicio = () => {
                         </div>
                         <div className='flex flex-col'>
                           <label htmlFor="estado">Estado</label>
-                          <select name="estado" id="estado" className='border-black border text-xl'>
+                          <select name="estado" id="estado" onChange={onInputChange} className='border-black border text-xl'>
                             <option value="0">Pendiente</option>
                             <option value="1">En Proceso</option>
                             <option value="2">Finalizado</option>

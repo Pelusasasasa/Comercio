@@ -23,6 +23,13 @@ export const servicioSlice = createSlice({
         updateService: (state, action) => {
             state.service = action.payload;
             state.isSaving = false;
+
+            state.servicios.map( servicio => {
+                if ( servicio._id === action.payload._id ) {
+                    servicio = action.payload;
+                }
+                return servicio;
+            })
         },
         deleteServicios: (state, action) => {
             state.servicios = state.servicios.filter(servicio => servicio._id !== action.payload._id);

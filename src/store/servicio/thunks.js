@@ -1,4 +1,4 @@
-import { deleteService, getNumeroService, getService, getServices, putService } from "../../servicio/helpers/service"
+import { deleteService, getNumeroService, getService, getServices, postService, putService } from "../../servicio/helpers/service"
 import { createService, deleteServicios, setSaving, setService, setServicios, updateService } from "./servicioSlice";
 
 export const startCreateService = () => {
@@ -6,9 +6,24 @@ export const startCreateService = () => {
 
         const { nombre } = getState().auth;
         const numero = await getNumeroService();
+        console.log(numero)
         dispatch( createService({numero, vendedor: nombre}) );
 
     };
+};
+
+export const startAddService = (lista) => {
+    const listaServiciosPromise = [];
+
+    return async( dispatch ) => {
+        for (const elem of lista){
+            listaServiciosPromise.push( await postService(elem));
+        };
+
+        const res = await Promise.all(listaServiciosPromise);
+
+        console.log(res)
+    }
 };
 
 export const startLoadingService = (id) => {
