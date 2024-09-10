@@ -20,11 +20,20 @@ export const AgregarServicio = () => {
       dispatch( setService( formState ));
     }, [formState])
 
-    const prueba = (e) => {
+    const prueba = async(e) => {
         if (e.keyCode === 13) {
-            window.api.openNewWindow('cliente/lista');
+            await window.apiVentanaPrincipal.openNewWindow('cliente/lista');
         }
-    }
+    };
+
+    useEffect(() => {
+        window.apiVentanaSecundaria.recibirCliente((data) => {
+            document.getElementById('codigo').value = data._id;
+            document.getElementById('cliente').value = data.nombre;
+            document.getElementById('direccion').value = data.direccion;
+            document.getElementById('telefono').value = data.telefono;
+        });
+    }, []);
     
     const addServico = () => {
         const elem = {};
@@ -54,20 +63,20 @@ export const AgregarServicio = () => {
     <PostPutService text='Agregar Servicio'>
         <form>
 
-              <section id='cliente'>
+              <section id='clientes'>
                   <fieldset className='flex justify-around gap-1 border border-gray-500 p-2'>
                       <legend>Cliente</legend>
                       <div className='flex flex-col'>
                           <label htmlFor="codigo">Codigo</label>
-                          <input onChange={onInputChange} onKeyUp={prueba} type="text" name="codigo" id="codigo" className='border border-black w-80'/>
+                          <input onChange={onInputChange} onKeyUp={prueba}  type="text" name="codigo" id="codigo" className='border border-black w-80'/>
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Cliente</label>
-                          <input onChange={onInputChange} type="text" name="cliente" id="cliente" className='border border-black w-80'/>
+                          <input onChange={onInputChange} type="text" name="cliente"  id="cliente" className='border border-black w-80'/>
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Direccion</label>
-                          <input onChange={onInputChange} type="text" name="direccion" id="direccion" className='border border-black w-80'/>
+                          <input onChange={onInputChange} type="text" name="direccion" id="direccion" className='border border-black w-80' />
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Telefono</label>

@@ -18,6 +18,12 @@ export const ClientePage = () => {
 
   const dispatch = useDispatch();
 
+  const enviarCliente = (e) => {
+    if (e.keyCode === 13) {
+      window.apiVentanaPrincipal.enviarCliente(cliente);
+      window.close();
+    }
+  }
 
   const handleClientes = (e) => {
 
@@ -66,7 +72,7 @@ export const ClientePage = () => {
                 <th className="border border-black">Saldo</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody onKeyDown={enviarCliente} tabIndex={0}>
               {clientes.map( cliente => (
                 <ClienteItem {...cliente} key={cliente._id} />
               ))}

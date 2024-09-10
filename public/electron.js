@@ -62,8 +62,18 @@ app.on('active', () => {
 });
 
 
+//Abrimos una ventana nueva con la direccion elegida
 ipcMain.on('open-new-window', (e, path) => {
 
     newWindow(path)
 
+});
+
+//Nos llega un funcion con el cliente
+ipcMain.on('enviar-cliente', (e, args) => {
+    //Mandamos el cliente a la ventana principal
+    mainWindow.webContents.send('recibir-cliente', args);
+
+    listClientWindow.close();
+    listClientWindow = null;
 });
