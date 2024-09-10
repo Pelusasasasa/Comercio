@@ -28,12 +28,14 @@ export const servicioSlice = createSlice({
             state.service = action.payload;
             state.isSaving = false;
 
-            state.servicios.map( servicio => {
+            state.servicios = state.servicios.map( servicio => {
                 if ( servicio._id === action.payload._id ) {
-                    servicio = action.payload;
+                    return action.payload;
                 }
                 return servicio;
-            })
+            });
+
+            console.log(state.servicios)
         },
         deleteServicios: (state, action) => {
             state.servicios = state.servicios.filter(servicio => servicio._id !== action.payload._id);

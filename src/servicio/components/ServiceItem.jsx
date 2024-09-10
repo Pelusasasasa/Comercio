@@ -7,9 +7,8 @@ export const ServiceItem = ({_id, numero, fecha, cliente, telefono, direccion, p
     const dispatch = useDispatch();
 
     let textEstado = '';
-
     //Cambia el valor del estado a un texto de estado para que no se muestre el numero sino una palabra
-    switch (estado) {
+    switch (parseInt(estado)) {
         case 0:
             textEstado = 'Pendiente';
             break;

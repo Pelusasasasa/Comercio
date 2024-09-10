@@ -8,6 +8,7 @@ import { setService } from '../../store/servicio/servicioSlice';
 import { ServiceAddItem } from '../components/ServiceAddItem';
 import { startAddService } from '../../store/servicio/thunks';
 
+
 export const AgregarServicio = () => {
     const [arrayServicios, setArrayServicio] = useState([]);
     const {service} = useSelector( state => state.servicio);
@@ -18,6 +19,12 @@ export const AgregarServicio = () => {
     useEffect(() => {
       dispatch( setService( formState ));
     }, [formState])
+
+    const prueba = (e) => {
+        if (e.keyCode === 13) {
+            window.api.openNewWindow('cliente/lista');
+        }
+    }
     
     const addServico = () => {
         const elem = {};
@@ -52,7 +59,7 @@ export const AgregarServicio = () => {
                       <legend>Cliente</legend>
                       <div className='flex flex-col'>
                           <label htmlFor="codigo">Codigo</label>
-                          <input onChange={onInputChange} type="text" name="codigo" id="codigo" className='border border-black w-80'/>
+                          <input onChange={onInputChange} onKeyUp={prueba} type="text" name="codigo" id="codigo" className='border border-black w-80'/>
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Cliente</label>

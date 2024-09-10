@@ -1,6 +1,7 @@
 // import isDev from 'electron-is-dev';
 
 const electron = require('electron');
+const { ipcMain } = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
@@ -12,9 +13,14 @@ const isDev = true;
 
 
 let mainWindow;
+let listClientWindow;
 
 function createWindow() {
-    mainWindow = new BrowserWindow();
+    mainWindow = new BrowserWindow({
+        webPreferences:{
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
     mainWindow.maximize();
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file//${path.join(__dirname, '../build/index.html')}`);
     
@@ -24,6 +30,22 @@ function createWindow() {
 
     mainWindow.on('closed', () => mainWindow => null);
 };
+
+function newWindow(direccion){
+    listClientWindow = new BrowserWindow({
+        parent: mainWindow,
+        webPreferences:{
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+
+    listClientWindow.loadURL(isDev ? `http://localhost:3000/${direccion}` : `file//${path.join(__dirname, `../build/index.html/${direccion}`)}`);
+        if (isDev) {
+        listClientWindow.webContents.openDevTools();
+    };
+
+    listClientWindow.on('closed', () => listClientWindow => null);
+}
 
 app.on('ready', createWindow);
 
@@ -37,4 +59,11 @@ app.on('active', () => {
     if (mainWindow === null) {
         createWindow();
     };
+});
+
+
+ipcMain.on('open-new-window', (e, path) => {
+
+    newWindow(path)
+
 });
