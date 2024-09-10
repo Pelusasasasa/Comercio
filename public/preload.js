@@ -12,4 +12,4 @@ contextBridge.exposeInMainWorld('apiVentanaSecundaria', {
   recibirCliente: async(callback) => {
     ipcRenderer.on('recibir-cliente', (e,data) => callback(data))
   }
-})
+});

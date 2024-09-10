@@ -1,7 +1,7 @@
 // import isDev from 'electron-is-dev';
 
 const electron = require('electron');
-const { ipcMain } = require('electron');
+const { ipcMain, Menu } = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
@@ -11,8 +11,7 @@ const path = require('path');
 
 const isDev = true;
 
-
-let mainWindow;
+let mainWindow = null;
 let listClientWindow;
 
 function createWindow() {
@@ -45,7 +44,7 @@ function newWindow(direccion){
     };
 
     listClientWindow.on('closed', () => listClientWindow => null);
-}
+};
 
 app.on('ready', createWindow);
 
@@ -61,12 +60,9 @@ app.on('active', () => {
     };
 });
 
-
 //Abrimos una ventana nueva con la direccion elegida
 ipcMain.on('open-new-window', (e, path) => {
-
     newWindow(path)
-
 });
 
 //Nos llega un funcion con el cliente
@@ -77,3 +73,40 @@ ipcMain.on('enviar-cliente', (e, args) => {
     listClientWindow.close();
     listClientWindow = null;
 });
+
+//Menu Secundario
+const menuBarra = [
+    {
+        label: "Datos",
+        submenu: [
+            {
+                label: "Numeros",
+                click(){
+                    const focusedWindow = BrowserWindow.getFocusedWindow();
+                    if (focusedWindow) {
+                        console.log(newWindow)
+                        newWindow('cliente/lista');
+                    }
+                }
+            },
+            {
+                label: "Provedores"
+            },
+            {
+                label: "Rubros"
+            },
+            {
+                label: "Vendedores"
+            },
+            {
+                label: "Cuentas"
+            },
+            {
+                label: "Imprimir Venta"
+            }
+        ]
+    }
+];
+
+const menu = Menu.buildFromTemplate(menuBarra);
+Menu.setApplicationMenu(menu);
