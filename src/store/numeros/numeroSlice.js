@@ -9,6 +9,12 @@ export const numerosSlice = createSlice({
         setNumeros: (state, action) => {
             state.numeros = action.payload;
         },
+        updateNumber: (state, action) => {
+            state.numeros = {
+                ...state.numeros,
+                ...action.payload
+            }
+        },
         incrementServicio: (state, /* action */ ) => {
             state.Servicio += 1;
         },
@@ -16,5 +22,6 @@ export const numerosSlice = createSlice({
 });
 
 
+
 // Action creators are generated for each case reducer function
-export const { incrementServicio , setNumeros } = numerosSlice.actions;
+export const { incrementServicio, updateNumber, setNumeros } = numerosSlice.actions;

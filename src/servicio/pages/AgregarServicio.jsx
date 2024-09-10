@@ -37,11 +37,11 @@ export const AgregarServicio = () => {
         elem.estado = estado;
 
         setArrayServicio([...arrayServicios, elem]);
-    }
+    };
 
     const handleSubmit = () => {
         dispatch( startAddService( arrayServicios ) )
-    }
+    };
 
   return (
     <PostPutService text='Agregar Servicio'>
@@ -147,7 +147,7 @@ export const AgregarServicio = () => {
         </form>
 
         <section className=' mt-2 pb-2 flex justify-around'>
-            <Button text='Agregar' type='submit' funcion={handleSubmit}/>
+            <Button text='Agregar' type='submit' funcion={handleSubmit} to='/servicio/lista' />
             <Button text='salir' to='/servicio/lista' />
         </section>
     </PostPutService>

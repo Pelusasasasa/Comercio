@@ -10,7 +10,9 @@ export const ServicioPage = () => {
 
   const { service, servicios } = useSelector( state => state.servicio );
   const { nombre, permiso } = useSelector( state => state.auth );
+  
   const dispatch = useDispatch();
+  
 
   //Para que se ejecute una ve la funcion de traer los servicios
   useEffect(() => {

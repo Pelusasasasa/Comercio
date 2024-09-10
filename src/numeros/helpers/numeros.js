@@ -7,7 +7,6 @@ export const getNumeros = async() => {
 };
 
 export const incrementService = async(valor) => {
-
-    const res = (await axios.put(`${URL}numero/servicio`, {Servicio: valor})).data;
-    return res;
+    const res = (await axios.put(`${URL}numero/Servicio`, {Servicio: valor})).data;
+    return valor;
 };
