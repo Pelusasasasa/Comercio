@@ -30,6 +30,13 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
             [ name ]: value
         });
     };
+    
+    const onChanges = ( value ) => {
+        setFormState({
+            ...formState,
+            ...value
+        });
+    }
 
     const onResetForm = () => {
         setFormState( initialForm );
@@ -50,6 +57,7 @@ export const useForm = ( initialForm = {}, formValidations = {} ) => {
     return {
         ...formState,
         formState,
+        onChanges,
         onInputChange,
         onResetForm,
 

@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
+import { useForm } from '../../hooks/useForm';
 import { PostPutService } from '../layout/Post-PutService'
 import { Button } from '../components/Button'
-import { useDispatch, useSelector } from 'react-redux';
-import { setService } from '../../store/servicio/servicioSlice';
+
 import { ServiceAddItem } from '../components/ServiceAddItem';
+
+import { setService } from '../../store/servicio/servicioSlice';
+
 import { startAddService } from '../../store/servicio/thunks';
+import { startGetCliente } from '../../store/cliente/thunks';
+import { startLoadingProducto } from '../../store/producto/thunks';
 
 
 export const AgregarServicio = () => {
@@ -15,14 +21,62 @@ export const AgregarServicio = () => {
     
     const dispatch = useDispatch();
 
-    const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState, onInputChange} = useForm(service);
+    const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState,onChanges, onInputChange} = useForm(service);
     useEffect(() => {
       dispatch( setService( formState ));
     }, [formState])
 
-    const prueba = async(e) => {
+    const onSearchClient = async(e) => {
         if (e.keyCode === 13) {
-            await window.apiVentanaPrincipal.openNewWindow('cliente/lista');
+           if (e.target.value !== '') {
+                const data = await dispatch( startGetCliente(e.target.value) );
+            
+                if (data) {
+                    document.getElementById('cliente').value = data.nombre;
+                    document.getElementById('direccion').value = data.direccion;
+                    document.getElementById('telefono').value = data.telefono;
+                    document.getElementById('codProd').focus();
+
+                    onChanges({
+                        codigo: data._id,
+                        cliente: data.nombre,
+                        direccion: data.direccion,
+                        telefono: data.telefono
+                    })
+
+                }else{
+                    await Swal.fire('Cliente no encontrado');
+                    document.getElementById('codigo').value = '';
+                };
+
+           }else{
+
+                await window.apiVentanaPrincipal.openNewWindow('cliente/lista');
+
+           };
+        }
+    };
+
+    const onSearchProduct = async(e) => {
+        if( e.keyCode === 13){
+            
+            if (e.target.value !== '') {
+                const data = await dispatch( startLoadingProducto(e.target.value) );
+                if (data) {
+                    onChanges({
+                        codProd: data._id,
+                        producto: data.descripcion,
+                        marca: data.marca,
+                        modelo: data.modelo
+                    })
+
+                    document.getElementById('producto').value = data.descripcion;
+                    document.getElementById('marca').value = data.marca;
+                    document.getElementById('producto').focus();
+
+                }
+            }
+            
         }
     };
 
@@ -56,7 +110,7 @@ export const AgregarServicio = () => {
     };
 
     const handleSubmit = () => {
-        dispatch( startAddService( arrayServicios ) )
+        dispatch( startAddService( arrayServicios ) );
     };
 
   return (
@@ -68,7 +122,7 @@ export const AgregarServicio = () => {
                       <legend>Cliente</legend>
                       <div className='flex flex-col'>
                           <label htmlFor="codigo">Codigo</label>
-                          <input onChange={onInputChange} onKeyUp={prueba}  type="text" name="codigo" id="codigo" className='border border-black w-80'/>
+                          <input onChange={onInputChange} onKeyUp={onSearchClient}  type="text" name="codigo" id="codigo" className='border border-black w-80'/>
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Cliente</label>
@@ -85,14 +139,14 @@ export const AgregarServicio = () => {
                   </fieldset>
               </section>
 
-              <section id='producto'>
+              <section id='productos'>
                   <fieldset className='flex flex-col gap-2 border border-gray-500 p-2'>
                       <legend>Producto</legend>
 
                       <main className='flex justify-around '>
                           <div className='flex flex-col'>
                               <label htmlFor="codProd">Cod. Prod</label>
-                              <input type="text" name="codProd" id="codProd" onChange={onInputChange} className='border border-black w-80'/>
+                              <input type="text" name="codProd" id="codProd" onKeyUp={onSearchProduct} onChange={onInputChange} className='border border-black w-80'/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="producto">Producto</label>

@@ -7,6 +7,7 @@ import { PostPutService } from '../layout/Post-PutService'
 import { Button } from '../components/Button'
 import { setService } from '../../store/servicio/servicioSlice';
 import { startPutServices } from '../../store/servicio';
+import { startPostMovVendedores } from '../../store/auth/thunks';
 
 export const ModificarServicio = () => {
     const {service, isSaving} = useSelector( state => state.servicio);
@@ -20,6 +21,8 @@ export const ModificarServicio = () => {
 
     const handleputService = async() => {
         await dispatch( startPutServices() );
+
+        await dispatch( startPostMovVendedores(`Se modifico el servicio tecnico numero: ${numero} del cliente: ${cliente} con el producto: ${producto}`));
     };
 
     const salir = async() => {

@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { Button } from '../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
-import { setService, startCreateService, startDeleteServices, startLoadingServices, startPutServices } from '../../store/servicio';
+import { resetService, setService, startCreateService, startDeleteServices, startLoadingServices, startPutServices } from '../../store/servicio';
 import { ServiceItem } from '../components/ServiceItem';
 import Swal from 'sweetalert2';
 import { startPostMovVendedores } from '../../store/auth/thunks';
+import { resetAuth } from '../../store/auth/authSlice';
 
 export const ServicioPage = () => {
 
@@ -22,9 +23,17 @@ export const ServicioPage = () => {
   }, [])
   
 
-  const handleServicios = (e = {}) => {
+  const handleServicios = async(e = {}) => {
     const text = e.target.value.toUpperCase();
-    dispatch( startLoadingServices(text === '' ? 'NADA' : text) );
+
+    const res = await dispatch( startLoadingServices(text === '' ? 'NADA' : text) );
+    //Retornalos los numeros de los servicios tecnicos
+    const auxLista = res.map( elem => {
+      return elem.numero
+    })
+
+    await dispatch(startPostMovVendedores(`Busco los servicios Tecnicos ${auxLista}`, 'Servicio'));
+
   };
 
   const handleAddService = () => {
@@ -39,7 +48,7 @@ export const ServicioPage = () => {
       title: 'Eliminar Servicio Tecnico?',
       confirmButtonText: 'Aceptar',
       showCancelButton: true,
-    })
+    });
 
     if (isConfirmed) {
       await dispatch( startDeleteServices(service._id) );
@@ -48,8 +57,10 @@ export const ServicioPage = () => {
   };
 
   const salir = async() => {
-        await dispatch( setService({}) );
-    }
+    //Ponemos el store de servicios en vacio devuelta
+        await dispatch( resetService() )
+        await dispatch( resetAuth() )
+    };
 
   return (
     <section className='bg-orange-300 h-full'>

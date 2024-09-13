@@ -39,7 +39,8 @@ function newWindow(direccion){
     });
 
     listClientWindow.loadURL(isDev ? `http://localhost:3000/${direccion}` : `file//${path.join(__dirname, `../build/index.html/${direccion}`)}`);
-        if (isDev) {
+    
+    if (isDev) {
         listClientWindow.webContents.openDevTools();
     };
 

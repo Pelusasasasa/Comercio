@@ -1,6 +1,5 @@
 import { setActiveCliente, setClientes, addNewCliente, updateCliente, borrarCliente } from "./clienteSlice";
-import { deleteCliente, loadClientes } from '../../cliente/helpers';
-import { getIdLastCliente, postCliente, putCliente } from "../../cliente/helpers";
+import { deleteCliente, getCliente, getIdLastCliente, loadClientes, postCliente, putCliente } from "../../cliente/helpers";
 
 //http://localhost:4000/gestion/clientes
 
@@ -23,6 +22,14 @@ export const startCreateCliente = () => {
         
     }
 };
+
+export const startGetCliente = (id) => {
+    return async(dispatch) => {
+        const res = await getCliente( id );
+        dispatch( setActiveCliente(res));
+        return res;
+    }
+}
 
 export  const startSaveCliente = () => {
     return async(dispatch, getState) => {

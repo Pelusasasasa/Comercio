@@ -23,7 +23,6 @@ export const startPostMovVendedores = (text, type) => {
         mov.descripcion = text;
         mov.vendedor = nombre;
         mov.tipo = type;
-
         await postMovVendedores( mov );
     }
 };

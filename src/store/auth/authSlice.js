@@ -23,10 +23,21 @@ export const authSlice = createSlice({
             state.nombre = null
             state.codigo = null
             state.permiso = null
+        },
+        resetAuth: ( state ) => {
+            state.status = 'not-authenticated';
+            state.nombre = null;
+            state.codigo = null;
+            state.permiso = null
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { checking, login, logout } = authSlice.actions;
+export const { 
+    checking,
+    login,
+    logout,
+    resetAuth
+} = authSlice.actions;

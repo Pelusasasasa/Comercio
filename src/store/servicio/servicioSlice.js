@@ -40,10 +40,24 @@ export const servicioSlice = createSlice({
         deleteServicios: (state, action) => {
             state.servicios = state.servicios.filter(servicio => servicio._id !== action.payload._id);
             state.service = null;
+        },
+        resetService: ( state ) => {
+            state.service = null;
+            state.servicios = [];
+            state.isSaving = false;
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { setSaving, createService, setService, setServicios, createServices, updateService, deleteServicios } = servicioSlice.actions;
+export const { 
+    createService,
+    createServices,
+    deleteServicios,
+    resetService,
+    setSaving,
+    setService,
+    setServicios,
+    updateService,
+} = servicioSlice.actions;
