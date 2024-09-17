@@ -10,10 +10,13 @@ export const productoSlice = createSlice({
     reducers: {
         isSaving: (state) => {
             state.isSaving = true;
+        },
+        setProductos: (state, action) => {
+            state.productos = action.payload;
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { isSaving } = productoSlice.actions;
+export const { isSaving, setProductos } = productoSlice.actions;

@@ -33,6 +33,8 @@ function createWindow() {
 function newWindow(direccion){
     listClientWindow = new BrowserWindow({
         parent: mainWindow,
+        width: 1000,
+        height: 800,
         webPreferences:{
             preload: path.join(__dirname, 'preload.js')
         }
@@ -40,9 +42,9 @@ function newWindow(direccion){
 
     listClientWindow.loadURL(isDev ? `http://localhost:3000/${direccion}` : `file//${path.join(__dirname, `../build/index.html/${direccion}`)}`);
     
-    if (isDev) {
-        listClientWindow.webContents.openDevTools();
-    };
+    // if (isDev) {
+    //     listClientWindow.webContents.openDevTools();
+    // };
 
     listClientWindow.on('closed', () => listClientWindow => null);
 };
@@ -106,6 +108,13 @@ const menuBarra = [
                 label: "Imprimir Venta"
             }
         ]
+    },
+    {
+        label: 'Tools',
+        accelerator: process.platform == "darwin" ? "Comand+D" : "Ctrl+D",
+        click(item, focusedWindow ){
+            focusedWindow.toggleDevTools();
+        }
     }
 ];
 

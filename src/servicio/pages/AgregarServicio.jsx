@@ -75,6 +75,8 @@ export const AgregarServicio = () => {
                     document.getElementById('producto').focus();
 
                 }
+            }else{
+                await window.apiVentanaPrincipal.openNewWindow('producto/lista');
             }
             
         }

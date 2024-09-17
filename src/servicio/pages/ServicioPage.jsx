@@ -1,14 +1,13 @@
 import { useEffect } from 'react'
 import { Button } from '../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
-import { resetService, setService, startCreateService, startDeleteServices, startLoadingServices, startPutServices } from '../../store/servicio';
+import { resetService,  startCreateService, startDeleteServices, startLoadingServices } from '../../store/servicio';
 import { ServiceItem } from '../components/ServiceItem';
 import Swal from 'sweetalert2';
 import { startPostMovVendedores } from '../../store/auth/thunks';
 import { resetAuth } from '../../store/auth/authSlice';
 
 export const ServicioPage = () => {
-
   const { service, servicios } = useSelector( state => state.servicio );
   const { nombre, permiso } = useSelector( state => state.auth );
   const dispatch = useDispatch();
