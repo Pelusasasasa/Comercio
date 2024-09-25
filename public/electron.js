@@ -12,7 +12,7 @@ const path = require('path');
 const isDev = true;
 
 let mainWindow = null;
-let listClientWindow;
+let listWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -30,8 +30,8 @@ function createWindow() {
     mainWindow.on('closed', () => mainWindow => null);
 };
 
-function newWindow(direccion){
-    listClientWindow = new BrowserWindow({
+function newWindow(direccion, button){
+    listWindow = new BrowserWindow({
         parent: mainWindow,
         width: 1000,
         height: 800,
@@ -40,13 +40,17 @@ function newWindow(direccion){
         }
     });
 
-    listClientWindow.loadURL(isDev ? `http://localhost:3000/${direccion}` : `file//${path.join(__dirname, `../build/index.html/${direccion}`)}`);
+    listWindow.loadURL(isDev ? `http://localhost:3000/${direccion}` : `file//${path.join(__dirname, `../build/index.html/${direccion}`)}`);
     
     // if (isDev) {
-    //     listClientWindow.webContents.openDevTools();
+    //     listWindow.webContents.openDevTools();
     // };
+    console.log("a")
+    listWindow.webContents.on('did-finish-load', () => {
+        listWindow.webContents.send('informacion', {button});
+    });
 
-    listClientWindow.on('closed', () => listClientWindow => null);
+    listWindow.on('closed', () => listWindow => null);
 };
 
 app.on('ready', createWindow);
@@ -64,8 +68,8 @@ app.on('active', () => {
 });
 
 //Abrimos una ventana nueva con la direccion elegida
-ipcMain.on('open-new-window', (e, path) => {
-    newWindow(path)
+ipcMain.on('open-new-window', (e, {direccion, button}) => {
+    newWindow(direccion, button)
 });
 
 //Nos llega un funcion con el cliente
@@ -73,8 +77,14 @@ ipcMain.on('enviar-cliente', (e, args) => {
     //Mandamos el cliente a la ventana principal
     mainWindow.webContents.send('recibir-cliente', args);
 
-    listClientWindow.close();
-    listClientWindow = null;
+    listWindow.close();
+    listWindow = null;
+});
+
+ipcMain.on('enviar-producto', (e, args) => {
+    mainWindow.webContents.send('recibir-producto', args);
+    listWindow.close();
+    listWindow = null;
 });
 
 //Menu Secundario

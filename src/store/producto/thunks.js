@@ -1,5 +1,15 @@
 import { getProduct, getsProducts } from "../../producto/helpers/producto";
-import { setProductos } from "./productoSlice";
+import { setActiveProduct, setProductos } from "./productoSlice";
+
+export const startActiveProducto = ( id ) => {
+    return async(dispatch, getState) => {
+        const product = await getProduct(id);
+
+        dispatch( setActiveProduct(product) );
+        console.log(product)
+        return product;
+    }
+}
 
 export const startLoadingProductos = (type, text) => {
     return async( dispatch, getState ) => {
@@ -7,7 +17,7 @@ export const startLoadingProductos = (type, text) => {
         
         dispatch( setProductos(products) )
     };
-}
+};
 
 export const startLoadingProducto = (id) => {
     return async(dispatch, getState) => {

@@ -21,7 +21,7 @@ export const AgregarServicio = () => {
     
     const dispatch = useDispatch();
 
-    const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState,onChanges, onInputChange} = useForm(service);
+    const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState, onChanges, onInputChange} = useForm(service);
     useEffect(() => {
       dispatch( setService( formState ));
     }, [formState])
@@ -42,7 +42,7 @@ export const AgregarServicio = () => {
                         cliente: data.nombre,
                         direccion: data.direccion,
                         telefono: data.telefono
-                    })
+                    });
 
                 }else{
                     await Swal.fire('Cliente no encontrado');
@@ -50,8 +50,11 @@ export const AgregarServicio = () => {
                 };
 
            }else{
-
-                await window.apiVentanaPrincipal.openNewWindow('cliente/lista');
+                const args = {
+                    direccion: 'cliente/lista',
+                    button: false
+                }
+                await window.apiVentanaPrincipal.openNewWindow(args);
 
            };
         }
@@ -76,7 +79,12 @@ export const AgregarServicio = () => {
 
                 }
             }else{
-                await window.apiVentanaPrincipal.openNewWindow('producto/lista');
+                const args = {
+                    direccion: 'producto/lista',
+                    button: false
+                };
+
+                await window.apiVentanaPrincipal.openNewWindow(args);
             }
             
         }
@@ -88,17 +96,42 @@ export const AgregarServicio = () => {
             document.getElementById('cliente').value = data.nombre;
             document.getElementById('direccion').value = data.direccion;
             document.getElementById('telefono').value = data.telefono;
+
+            // if (data) {
+            //     onChanges({
+            //         codigo: data._id,
+            //         cliente: data.nombre,
+            //         direccion: data.direccion,
+            //         telefono: data.telefono
+            //     });
+            // };
         });
+
+        window.apiVentanaSecundaria.recibirProducto( (data) => {
+            document.getElementById('codProd').value = data._id; 
+            document.getElementById('producto').value = data.descripcion; 
+            document.getElementById('marca').value = data.marca; 
+
+            if (data) {
+                onChanges({
+                    codProd: data._id,
+                    producto: data.descripcion,
+                    marca: data.marca,
+                    modelo: data.modelo
+                });
+            };
+            
+        })
     }, []);
     
     const addServico = () => {
         const elem = {};
-
+        console.log(cliente)
         elem.idCliente = codigo;
         elem.cliente = cliente;
         elem.direccion = direccion;
         elem.telefono = telefono;
-
+        console.log(telefono)
         elem.codProd = codProd;
         elem.producto = producto;
         elem.marca = marca;
@@ -107,12 +140,13 @@ export const AgregarServicio = () => {
         elem.numero = arrayServicios.length !== 0 ? arrayServicios[arrayServicios.length - 1].numero + 1 : numero;
         elem.vendedor = vendedor;
         elem.estado = estado;
-
         setArrayServicio([...arrayServicios, elem]);
+        console.log(arrayServicios)
     };
 
     const handleSubmit = () => {
-        dispatch( startAddService( arrayServicios ) );
+        console.log(arrayServicios)
+        // dispatch( startAddService( arrayServicios ) );
     };
 
   return (

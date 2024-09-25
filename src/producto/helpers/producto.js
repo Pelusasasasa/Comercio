@@ -9,8 +9,6 @@ export const getProduct = async(id) => {
 };
 
 export const getsProducts = async(type = 'descripcion', descripcion = 'textoVacio') => {
-    console.log(type);
-    console.log(descripcion);
     const products = (await axios.get(`${URL}productos/${descripcion}/${type}`)).data;
-    console.log(products)
+    return products;
 };

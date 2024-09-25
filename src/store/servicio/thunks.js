@@ -2,6 +2,7 @@ import { incrementService } from "../../numeros/helpers/numeros";
 import { deleteService, getNumeroService, getService, getServices, postService, putService } from "../../servicio/helpers/service"
 import { startPostMovVendedores } from "../auth/thunks";
 import { updateNumber } from "../numeros/numeroSlice";
+import { emptyProductos } from "../producto/productoSlice";
 import { createService, createServices, deleteServicios, setSaving, setService, setServicios, updateService } from "./servicioSlice";
 
 export const startCreateService = () => {
@@ -30,6 +31,8 @@ export const startAddService = (lista) => {
 
         dispatch( createServices( servicios ) );
         dispatch( updateNumber({Servicio: res}) );
+
+        dispatch( emptyProductos() );
     }
 };
 

@@ -9,10 +9,11 @@ import { startCreateCliente, startDeleteCliente, startLoadingClientes } from "..
 import { Button } from "../components/Button";
 import { startPostMovVendedores } from "../../store/auth/thunks";
 import { setEmptyClientes } from "../../store/cliente/clienteSlice";
+import { useEffect, useState } from "react";
 
 
 export const ClientePage = () => {
-
+  const [displayButton, setDisplayButton] = useState( true );
   const { clientes, active: cliente } = useSelector( state => state.cliente);
   const { nombre, permiso } = useSelector( state => state.auth);
 
@@ -50,7 +51,16 @@ export const ClientePage = () => {
 
   const salir = async() => {
     dispatch( setEmptyClientes() );
-  }
+  };
+
+  useEffect(() => {
+      //Recibimos la informacion de abrir la ventana
+      window.apiVentanaSecundaria.informacion(( data ) => {
+        setDisplayButton(data.button);
+      });
+
+  }, [])
+    
 
   return (
     <ClienteLayout>
@@ -80,7 +90,7 @@ export const ClientePage = () => {
           </table>
         </section>
 
-        <section className="flex justify-around mt-2">
+        <section className={`flex justify-around mt-2 ${displayButton ? '' : 'hidden'}`}>
           <Button to='/cliente/agregar' text='Agregar Cliente' funcion={handleCreateCliente} />
           <Button to='/cliente/modificar' text='Modificar Cliente' disabled={permiso !== 2 ? ' ' : 'hidden'} />
           <Button text='Eliminar Cliente' funcion={handleDeleteCliente} disabled={permiso === 0 ? ' ' : 'hidden'} />

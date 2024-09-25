@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ComercioLayout } from '../layout/ComercioLayout'
 import { loadNumeros } from '../../store/numeros/thunks';
 
 export const ComercioPage = () => {
+  const state = useSelector( state => state );
+  console.log(state)
   const dispatch = useDispatch();
 
   useEffect(() => {
