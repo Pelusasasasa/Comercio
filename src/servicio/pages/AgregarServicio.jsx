@@ -126,12 +126,10 @@ export const AgregarServicio = () => {
     
     const addServico = () => {
         const elem = {};
-        console.log(cliente)
         elem.idCliente = codigo;
         elem.cliente = cliente;
         elem.direccion = direccion;
         elem.telefono = telefono;
-        console.log(telefono)
         elem.codProd = codProd;
         elem.producto = producto;
         elem.marca = marca;
@@ -145,8 +143,7 @@ export const AgregarServicio = () => {
     };
 
     const handleSubmit = () => {
-        console.log(arrayServicios)
-        // dispatch( startAddService( arrayServicios ) );
+        dispatch( startAddService( arrayServicios ) );
     };
 
   return (

@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 export const ClientePage = () => {
   const [displayButton, setDisplayButton] = useState( true );
   const { clientes, active: cliente } = useSelector( state => state.cliente);
+
   const { nombre, permiso } = useSelector( state => state.auth);
 
   const dispatch = useDispatch();

@@ -59,7 +59,7 @@ export const ServicioPage = () => {
     //Ponemos el store de servicios en vacio devuelta
         await dispatch( resetService() )
         await dispatch( resetAuth() )
-    };
+  };
 
   return (
     <section className='bg-orange-300 h-full'>
