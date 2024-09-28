@@ -1,15 +1,8 @@
-// import isDev from 'electron-is-dev';
-
-const electron = require('electron');
-const { ipcMain, Menu } = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-
+const { ipcMain, Menu, app, BrowserWindow } = require('electron');
 const path = require('path');
-// const isDev = require('electron-is-dev');
-// console.log(isDev)
+require('dotenv').config();
 
-const isDev = true;
+const isDev = process.env.NODE_ENV === 'desarrollo';
 
 let mainWindow = null;
 let listWindow;

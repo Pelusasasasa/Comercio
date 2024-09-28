@@ -15,8 +15,11 @@ export const servicioSlice = createSlice({
             state.service = action.payload;
         },
         createServices: (state, action) => {
-            state.servicios.pop();
-            state.servicios = [...state.servicios, ...action.payload]
+            
+            // action.payload.forEach( servicio => {
+            //     state.servicios.push(servicio);
+            // })
+            
         },
         setService: (state, action) => {
             state.service = action.payload;

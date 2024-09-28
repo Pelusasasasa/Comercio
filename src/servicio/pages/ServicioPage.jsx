@@ -3,9 +3,11 @@ import { Button } from '../components/Button'
 import { useDispatch, useSelector } from 'react-redux';
 import { resetService,  startCreateService, startDeleteServices, startLoadingServices } from '../../store/servicio';
 import { ServiceItem } from '../components/ServiceItem';
-import Swal from 'sweetalert2';
+
 import { startPostMovVendedores } from '../../store/auth/thunks';
 import { resetAuth } from '../../store/auth/authSlice';
+
+import Swal from 'sweetalert2';
 
 export const ServicioPage = () => {
   const { service, servicios } = useSelector( state => state.servicio );

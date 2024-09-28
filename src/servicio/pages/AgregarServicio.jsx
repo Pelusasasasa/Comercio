@@ -22,6 +22,8 @@ export const AgregarServicio = () => {
     const dispatch = useDispatch();
 
     const {codigo, cliente, direccion, telefono, codProd, producto, marca, modelo, inconvenientes, numero, vendedor, estado, formState, onChanges, onInputChange} = useForm(service);
+    //Que cambie el estado al cambiar los inputs
+
     useEffect(() => {
       dispatch( setService( formState ));
     }, [formState])
@@ -139,7 +141,6 @@ export const AgregarServicio = () => {
         elem.vendedor = vendedor;
         elem.estado = estado;
         setArrayServicio([...arrayServicios, elem]);
-        console.log(arrayServicios)
     };
 
     const handleSubmit = () => {
@@ -155,19 +156,19 @@ export const AgregarServicio = () => {
                       <legend>Cliente</legend>
                       <div className='flex flex-col'>
                           <label htmlFor="codigo">Codigo</label>
-                          <input onChange={onInputChange} onKeyUp={onSearchClient}  type="text" name="codigo" id="codigo" className='border border-black w-80'/>
+                          <input onChange={onInputChange} onKeyUp={onSearchClient} value={codigo}  type="text" name="codigo" id="codigo" className='border border-black w-80'/>
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Cliente</label>
-                          <input onChange={onInputChange} type="text" name="cliente"  id="cliente" className='border border-black w-80'/>
+                          <input onChange={onInputChange} type="text" name="cliente" value={cliente} id="cliente" className='border border-black w-80'/>
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Direccion</label>
-                          <input onChange={onInputChange} type="text" name="direccion" id="direccion" className='border border-black w-80' />
+                          <input onChange={onInputChange} type="text" value={direccion} name="direccion" id="direccion" className='border border-black w-80' />
                       </div>
                       <div className='flex flex-col'>
                           <label htmlFor="">Telefono</label>
-                          <input onChange={onInputChange} type="text" name="telefono" id="telefono" className='border border-black w-80'/>
+                          <input onChange={onInputChange} type="text" value={telefono} name="telefono" id="telefono" className='border border-black w-80'/>
                       </div>
                   </fieldset>
               </section>
@@ -179,19 +180,19 @@ export const AgregarServicio = () => {
                       <main className='flex justify-around '>
                           <div className='flex flex-col'>
                               <label htmlFor="codProd">Cod. Prod</label>
-                              <input type="text" name="codProd" id="codProd" onKeyUp={onSearchProduct} onChange={onInputChange} className='border border-black w-80'/>
+                              <input type="text" name="codProd" id="codProd" onKeyUp={onSearchProduct} onChange={onInputChange} className='border border-black w-80' value={codProd}/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="producto">Producto</label>
-                              <input type="text" name="producto" id="producto" onChange={onInputChange} className='border border-black w-80'/>
+                              <input type="text" name="producto" id="producto" onChange={onInputChange} className='border border-black w-80' value={producto}/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="modelo">Modelo</label>
-                              <input type="text" name="modelo" id="modelo" onChange={onInputChange} className='border border-black w-80'/>
+                              <input type="text" name="modelo" id="modelo" onChange={onInputChange} className='border border-black w-80' value={modelo}/>
                           </div>
                           <div className='flex flex-col'>
                               <label htmlFor="marca">Marca</label>
-                              <input type="text" name="marca" id="marca" onChange={onInputChange} className='border border-black w-80'/>
+                              <input type="text" name="marca" id="marca" onChange={onInputChange} className='border border-black w-80' value={marca}/>
                           </div>
                       </main>
                       <div className='flex flex-col'>
@@ -207,6 +208,7 @@ export const AgregarServicio = () => {
               <section>
                   <fieldset className='p-2 border-gray-500'>
                       <legend>Detalles</legend>
+                      
                       <main className='bg-white h-52 overflow-scroll'>
                           <table className='w-full border-collapse'>
                             <thead>
@@ -225,18 +227,22 @@ export const AgregarServicio = () => {
                             </tbody>
                       </table>
                       </main>
+
                       <main className='flex justify-around gap-2 mt-2'>
+
                         <div className='flex flex-col'>
                           <label htmlFor="numero">Numero</label>
-                          <input className='border border-black' type="number" name="numero" id="numero" disabled value={numero}/>
+                          <input className='border border-black' type="number" name="numero" id="numero" disabled value={numero ? numero : ''}/>
                         </div>
+
                         <div className='flex flex-col'>
                           <label htmlFor="vendedor">Vendedor</label>
-                          <input className='border border-black' type="text" name="vendedor" id="vendedor" disabled value={vendedor} />
+                          <input className='border border-black' type="text" name="vendedor" id="vendedor" disabled value={vendedor ? vendedor : ''} />
                         </div>
+
                         <div className='flex flex-col'>
                           <label htmlFor="estado">Estado</label>
-                          <select name="estado" id="estado" onChange={onInputChange} className='border-black border text-xl'>
+                          <select name="estado" id="estado" onChange={onInputChange} className='border-black border text-xl' value={estado}>
                             <option value="0">Pendiente</option>
                             <option value="1">En Proceso</option>
                             <option value="2">Finalizado</option>
@@ -244,6 +250,7 @@ export const AgregarServicio = () => {
                           </select>
                         </div>
                       </main>
+
                   </fieldset>
               </section>
 

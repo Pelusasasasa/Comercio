@@ -60,6 +60,8 @@ export const ClientePage = () => {
         setDisplayButton(data.button);
       });
 
+      handleClientes({target: {value: ''}})
+
   }, [])
     
 

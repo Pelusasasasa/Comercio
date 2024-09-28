@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 export const ProductoPage = () => {
     const [displayButton, setDisplayButton] = useState( true )
     const {producto, productos} = useSelector(state => state.productos);
+    
     const dispatch = useDispatch();
 
     const enviarProduct = (e) => {
